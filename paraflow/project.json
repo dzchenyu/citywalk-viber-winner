@@ -1,0 +1,122 @@
+{
+  "name": "城市行走计划器-城市散步规划助手",
+  "created_at": "2025-07-25T02:32:36.733401+00:00",
+  "paraflow_version": "1.0",
+  "screens": [
+    {
+      "id": "9:0",
+      "title": "首页地图",
+      "filename": "9:0.html"
+    },
+    {
+      "id": "10:0",
+      "title": "AI路径对话页",
+      "filename": "10:0.html"
+    },
+    {
+      "id": "11:0",
+      "title": "个人收藏页",
+      "filename": "11:0.html"
+    },
+    {
+      "id": "12:0",
+      "title": "路径详情页",
+      "filename": "12:0.html"
+    },
+    {
+      "id": "13:0",
+      "title": "帖子详情页",
+      "filename": "13:0.html"
+    },
+    {
+      "id": "19:0",
+      "title": "首页地图-优化版",
+      "filename": "19:0.html"
+    },
+    {
+      "id": "20:0",
+      "title": "路径详情页-优化版",
+      "filename": "20:0.html"
+    },
+    {
+      "id": "21:0",
+      "title": "个人收藏页-优化版",
+      "filename": "21:0.html"
+    },
+    {
+      "id": "22:0",
+      "title": "CityWalk地图首页",
+      "filename": "22:0.html"
+    },
+    {
+      "id": "28:0",
+      "title": "CityWalk首页地图界面",
+      "filename": "28:0.html"
+    },
+    {
+      "id": "29:0",
+      "title": "个人历史卡册页面",
+      "filename": "29:0.html"
+    },
+    {
+      "id": "30:0",
+      "title": "帖子发布与评论页面",
+      "filename": "30:0.html"
+    },
+    {
+      "id": "31:0",
+      "title": "CityWalk首页地图界面",
+      "filename": "31:0.html"
+    },
+    {
+      "id": "38:0",
+      "title": "CityWalk首页地图界面",
+      "filename": "38:0.html"
+    },
+    {
+      "id": "39:0",
+      "title": "帖子发布与评论页面",
+      "filename": "39:0.html"
+    },
+    {
+      "id": "42:0",
+      "title": "个人历史卡册集合页面",
+      "filename": "42:0.html"
+    },
+    {
+      "id": "43:0",
+      "title": "单个路线卡片详情页面",
+      "filename": "43:0.html"
+    },
+    {
+      "id": "47:0",
+      "title": "个人历史卡册集合页面",
+      "filename": "47:0.html"
+    },
+    {
+      "id": "48:0",
+      "title": "单个路线卡片详情页面",
+      "filename": "48:0.html"
+    },
+    {
+      "id": "57:0",
+      "title": "个人历史卡册集合页面",
+      "filename": "57:0.html"
+    },
+    {
+      "id": "58:0",
+      "title": "单个路线卡片详情页面",
+      "filename": "58:0.html"
+    },
+    {
+      "id": "59:0",
+      "title": "CityWalk首页地图界面",
+      "filename": "59:0.html"
+    },
+    {
+      "id": "60:0",
+      "title": "CityWalk首页地图界面",
+      "filename": "60:0.html"
+    }
+  ]
+}
