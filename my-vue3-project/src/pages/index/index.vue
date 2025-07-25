@@ -55,44 +55,52 @@
       </view>
     </view>
 
-    <!-- 地图区域：显示高德地图和路线卡片 -->
-    <view class="map-container">
-      <!-- 高德地图组件 -->
-      <MapContainer 
-        :regenerate-route="regenerateRoute"
-        @route-generated="onRouteGenerated"
-        @navigation-ready="onNavigationReady"
-      />
-      
-      <!-- 路线卡片：横向滚动的路线推荐 -->
-      <scroll-view class="route-cards" scroll-x="true">
-        <!-- 动态渲染当前时间对应的路线卡片 -->
-        <view 
-          v-for="(route, index) in currentRoutes" 
-          :key="index"
-          :class="['route-card', route.type]"
-        >
-          <text class="route-title">{{ route.title }}</text>
-          <view class="route-info">
-            <i class="fas fa-route mr-1"></i>
-            <text>{{ route.distance }} · {{ route.duration }}</text>
-          </view>
-          <view class="route-images">
-            <!-- 路线相关的图片展示 -->
-            <image 
-              v-for="(img, imgIndex) in route.images" 
-              :key="imgIndex"
-              :src="img"
-              mode="aspectFill"
-            ></image>
-          </view>
-          <!-- 时间标签：显示当前选择的时间 -->
-          <view class="route-badge">
-            <text>{{ currentTimeLabel }}</text>
-          </view>
+      <!-- 地图区域：显示高德地图和单卡片 -->
+      <view class="map-container">
+        <!-- 高德地图组件 -->
+        <MapContainer 
+          :regenerate-route="regenerateRoute"
+          @route-generated="onRouteGenerated"
+          @navigation-ready="onNavigationReady"
+        />
+        
+        <!-- 单卡片展示：淡入淡出效果 -->
+        <view class="single-card-container">
+          <transition name="fade" mode="out-in">
+            <view 
+              :class="['single-route-card', currentRoutes[currentCardIndex]?.type || 'enhanced-card']"
+              v-if="currentRoutes.length > 0"
+              :key="currentCardIndex"
+            >
+              <view class="card-header">
+                <text class="route-title">{{ currentRoutes[currentCardIndex]?.title }}</text>
+                <view class="route-badge">
+                  <text>{{ currentTimeLabel }}</text>
+                </view>
+              </view>
+              
+              <view class="route-info">
+                <i class="fas fa-route"></i>
+                <text>{{ currentRoutes[currentCardIndex]?.distance }} · {{ currentRoutes[currentCardIndex]?.duration }}</text>
+              </view>
+              
+              <view class="route-images">
+                <image 
+                  v-for="(img, imgIndex) in currentRoutes[currentCardIndex]?.images" 
+                  :key="imgIndex"
+                  :src="img"
+                  mode="aspectFill"
+                  class="route-image"
+                ></image>
+              </view>
+              
+              <view class="card-progress">
+                <text class="progress-text">{{ currentCardIndex + 1 }} / {{ currentRoutes.length }}</text>
+              </view>
+            </view>
+          </transition>
         </view>
-      </scroll-view>
-    </view>
+      </view>
 
     <!-- 底部导航：三个操作按钮 -->
     <view class="bottom-nav">
@@ -269,10 +277,18 @@ export default {
         this.startNavigationFlag = false
       }, 2000)
     },
-    // 不喜欢：设置激活状态并记录日志
+    // 不喜欢：切换到下一个卡片
     dislike() {
       this.activeNav = 'dislike'
       console.log('不喜欢')
+      
+      // 切换到下一个卡片
+      if (this.currentCardIndex < this.currentRoutes.length - 1) {
+        this.currentCardIndex++
+      } else {
+        // 如果已经是最后一个，回到第一个
+        this.currentCardIndex = 0
+      }
     },
     // 收藏：设置激活状态并记录日志
     bookmark() {
@@ -625,5 +641,112 @@ export default {
     background: rgba(255, 255, 255, 0.6);
     border-radius: 10rpx;
   }
+}
+
+// 单卡片容器样式 - 真正居中显示
+.single-card-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateX(-30rpx) translateY(80rpx);
+  width: 580rpx;
+  z-index: 100;
+  margin-top: 180rpx; // 向下偏移避免完全居中
+}
+
+// 单卡片样式 - 增强毛玻璃效果
+.single-route-card {
+  width: 100%;
+  padding: 28rpx;
+  border-radius: 32rpx;
+  position: relative;
+  border: 1rpx solid rgba(255, 255, 255, 0.15);
+  
+  // 浅色卡片样式 - 调整透明度，背景偏黑
+  &.enhanced-card {
+    background: rgba(30, 30, 30, 0.35);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 12rpx 40rpx rgba(0, 0, 0, 0.25),
+                0 4rpx 16rpx rgba(0, 0, 0, 0.15),
+                inset 0 1rpx 0 rgba(255, 255, 255, 0.05);
+  }
+  
+  // 深色卡片样式 - 调整透明度，背景偏黑
+  &.dark-card {
+    background: rgba(20, 20, 20, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 12rpx 40rpx rgba(0, 0, 0, 0.3),
+                0 4rpx 16rpx rgba(0, 0, 0, 0.2),
+                inset 0 1rpx 0 rgba(255, 255, 255, 0.03);
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16rpx;
+  }
+  
+  .route-title {
+    font-size: 36rpx;
+    color: #fcfcfc;
+    font-weight: 600;
+    text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
+    flex: 1;
+  }
+  
+  .route-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24rpx;
+    font-size: 28rpx;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    
+    .fas {
+      margin-right: 8rpx;
+      color: rgba(253, 221, 220, 0.9);
+    }
+  }
+  
+  .route-images {
+    display: flex;
+    gap: 12rpx;
+    margin-bottom: 16rpx;
+    
+    .route-image {
+      width: 110rpx;
+      height: 110rpx;
+      border-radius: 12rpx;
+      border: 2rpx solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  .card-progress {
+    text-align: center;
+    margin-top: 16rpx;
+    
+    .progress-text {
+      font-size: 24rpx;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+    }
+  }
+}
+
+// 淡入淡出动画
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+// 移除旧的路线卡片样式
+.route-cards {
+  display: none;
 }
 </style>
