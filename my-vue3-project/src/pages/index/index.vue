@@ -254,7 +254,7 @@ export default {
     },
     currentTimeLabel() {
       const labels = {
-        '30min': '30',
+        '30min': '0.5h',
         '2h': '2h',
         'halfday': '半天'
       }

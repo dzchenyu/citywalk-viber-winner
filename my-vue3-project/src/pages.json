@@ -5,12 +5,6 @@
 			"style": {
 				"navigationBarTitleText": "第二条街"
 			}
-		},
-		{
-			"path": "pages/history/history",
-			"style": {
-				"navigationBarTitleText": "历史卡册"
-			}
 		}
 	],
 	"globalStyle": {
